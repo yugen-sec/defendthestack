@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Yūgen Sec - 幽玄</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 body {
-    font-family: "Lato", sans-serif;
-    color: black;
+  font-family: "Lato", sans-serif;
 }
 
 .sidenav {
@@ -22,17 +21,39 @@ body {
   padding-top: 60px;
 }
 
-.sidenav a {
+.sidenav a, .dropdown-btn {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;
   display: block;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
   transition: 0.3s;
 }
 
-.sidenav a:hover {
+.sidenav a:hover, .dropdown-btn:hover {
   color: #f1f1f1;
+}
+
+.main {
+  margin-left: 200px; 
+  font-size: 20px; 
+  padding: 0px 10px;
+}
+
+.active {
+  background-color: #993399;
+  color: white;
+}
+
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
 }
 
 .sidenav .closebtn {
@@ -41,11 +62,6 @@ body {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
-}
-
-#main {
-  transition: margin-left .5s;
-  padding: 1px;
 }
 
 @media screen and (max-height: 450px) {
@@ -57,11 +73,15 @@ body {
 <body bgcolor="6c1089">
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="index.html">Home</a>
-  <a href="#">Writeups</a>
-  <a href="#">Reversing and Binary Exploitation</a>
-  <a href="#">Miscellaneous</a>
-  <a href="#">About</a>
+  <a href="home.html">Home</a>
+  <button class="dropdown-btn">Writeups 
+  </button>
+  <div class="dropdown-container">
+    <a href="#">HackTheBox Writeups</a>
+    <a href="#">VulnHub Writeups</a>
+    <a href="#">CyberSecLabs Writeups</a>
+  </div>
+  <a href="whoami.html">About</a>
 </div>
 
 <div id="nav">
@@ -71,21 +91,36 @@ body {
   <p align="center">
   <img src="img/main/whoami.png" alt="logo.png" style="max-width:100%;height:auto;">
 </p>
-<p align="center"><font color="black"><b>Welcome to my blog! This is where I will be recording my journey as a beginner cybersecurity enthusiast with the aims of being 1337. This blog will feature walkthroughs on different platforms and also writeups of interesting CTFs/Challenges that I take part in. I am currently interested in the fields of penetration testing (network and web app) and reverse engineering, which will be what most of what this website is about. The reason why I decided on starting up my own website is because, it is a great way to record your work, my work will be available to people to learn and also for me to learn from them, and finally because I love doing this and I want to give back to the community that taught me everything.<br>
-So stick around, read up, correct me if I'm wrong, ask questions, and criticism is highly valued and welcomed. You can always reach me at my email and Twitter, which should be below this.</font></b></p>
+<p align="center"><font color="black"><b>Welcome to my blog! This is where I will be recording my journey as a beginner cybersecurity enthusiast with the aims of being 1337. This blog will feature walkthroughs on different platforms and also writeups of interesting CTFs/Challenges that I take part in. I am currently interested in the fields of penetration testing (network and web app) and reverse engineering, which will be what most of what this website is about. The reason why I decided on starting up my own website is because, it is a great way to record your work, my work will be available to people to learn and also for me to learn from them, and finally because I love doing this and I want to give back to the community that taught me everything.So stick around, read up, correct me if I'm wrong, ask questions, and criticism is highly valued and welcomed. You can always reach me at my email and Twitter linked below.</font></b></p>
 </div>
 
 <div id="socials">
   <p align="center">
   <a href="https://twitter.com/BIT_R0nIn?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @BIT_R0nIn</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>  <a href="https://github.com/yugen-sec"><img src="img/main/GitHub-Mark-Light-32px.png"></a>  <a href="mailto:bitronin13337@gmail.com"><img src="img/main/mail-142.png"></a></p>
   </div>
+</div>
 <script>
 function openNav() {
-  document.getElementById("mySidenav").style.width = "300px";
+  document.getElementById("mySidenav").style.width = "450px";
 }
 
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
+}
+
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+  this.classList.toggle("active");
+  var dropdownContent = this.nextElementSibling;
+  if (dropdownContent.style.display === "block") {
+  dropdownContent.style.display = "none";
+  } else {
+  dropdownContent.style.display = "block";
+  }
+  });
 }
 </script>
    
