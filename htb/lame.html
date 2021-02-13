@@ -5,7 +5,7 @@
 <link rel="icon" type="image/png" href="../img/main/favicon-16.png" />
 <title>
 
-Lame HackTheBox Writeup
+Lame - HackTheBox Writeup
 
 </title>
 <style>
@@ -182,7 +182,7 @@ ul{
     <li><b>Difficulty:</b> Easy</li>
   </ul>
   <h2>Scanning and Reconnaissance</h2>
-  <p>The first step taken in a typical hacking process is scanning and reconnaissance. In order to infiltrate and exploit the target we need to find out every piece of information we can get our hands upon and build up from there. Some basic information to hunt for may include, open ports, hostnames and IP addresses, operating systems etc.</p>
+  <p>The first step taken in a typical 'hacking' process is scanning and reconnaissance. In order to infiltrate and exploit the target we need to find out every piece of information we can get our hands upon and build up from there. Some basic information to hunt for may include, open ports, hostnames and IP addresses, operating systems etc.</p>
   <p>As our first step we are going to be finding out what ports are open in our target. A port scan is the equivalent of rattling a door knob to check if it is locked, if it isn't (port is open) we can use it to gain further information on what service is running and hopefully leverage that to gain access. For our port scan we are going to be using the famous tool Nmap. I always split my scan into two, the first scan is used to check all the ports (all 65535 of them) for anything open and the second scan is used to provide a more in-depth scan of the open ports from the first. The command used to run the first scan is shown below.</p>
   <code>sudo nmap -p- -oN nmap/Lame-openports 10.10.10.3</code>
   <p>The flags can be explained as follows,</p>
