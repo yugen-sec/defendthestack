@@ -284,7 +284,7 @@ ul{
   <br>
   <img src="../img/htb/doctor/rce-payload.png" alt="rce-payload.png" style="max-width:100%;height:auto;">
   <img src="../img/htb/doctor/reverse-shell.png" alt="reverse-shell.png" style="max-width:100%;height:auto;">
-  <p>According to the above output we can observe that we have successful access to the target as the user "web". The nect step would be to escalate our privileges to somehow obtain root access.</p>
+  <p>According to the above output we can observe that we have successful access to the target as the user "web". The next step would be to escalate our privileges to somehow obtain root access.</p>
   <h2>Target Enumeration & Privilege Escalation</h2>
   <p>Listing the contents of the home directory we find a directory called "<b>shaun</b>" which is probably a home directory of a user in the system (check the passwd file to confirm). After listing the contents of this directory we find the user flag which however could only be read by the user shaun. This means that we will probably have to escalate our privileges as either shaun (or maybe even higher, root).</p>
   <img src="../img/htb/doctor/shaun.png" alt="shauns-home-directory.png" style="max-width:100%;height:auto;">
