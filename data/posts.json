@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Burnout in Cybersecurity: The Hidden Threat",
+    "slug": "burnout-cybersecurity",
+    "excerpt": "Cyber burnout is real. Learn to identify, prevent, and recover from stress in the security industry.",
+    "author": "Rusiru",
+    "date": "2025-08-01",
+    "tags": ["Personal", "Career"],
+    "image": "assets/images/burnout.png"
+  },
+  {
+    "title": "Why I Got Into Cybersecurity",
+    "slug": "my-security-journey",
+    "excerpt": "My journey into cybersecurity, from curiosity to passion.",
+    "author": "Rusiru",
+    "date": "2025-08-03",
+    "tags": ["Personal", "Journey", "Career"],
+    "image": "assets/images/journey.png"
+  },
+  {
+    "title": "Top 5 Nmap Scripts for Recon",
+    "slug": "nmap-scripts",
+    "excerpt": "5 powerful Nmap NSE scripts to supercharge your reconnaissance phase.",
+    "author": "Rusiru",
+    "date": "2025-06-21",
+    "tags": ["Nmap", "Recon", "Security"],
+    "image": "assets/images/nmap-scripts.jpg"
+  },
+  {
+    "title": "How to Build a Theme Toggle",
+    "slug": "theme-toggle",
+    "excerpt": "Learn how to implement a dark/light mode toggle using HTML, CSS, and JS.",
+    "author": "Rusiru",
+    "date": "2025-06-20",
+    "tags": ["JavaScript", "Themes", "UI"],
+    "image": "assets/images/theme-toggle.jpeg"
+  },
+  {
+  "title": "Understanding the OSI Model (With Hacker Examples)",
+  "slug": "osi-model",
+  "excerpt": "Confused by the OSI Model? Let’s break it down layer by layer with real-world examples of how hackers target each one.",
+  "date": "2025-05-03",
+  "author": "Rusiru",
+  "tags": ["Networking", "Security", "Theory"],
+  "image": "assets/images/layer-cake.png"
+  },
+  {
+  "title": "What Is DNS and How Attackers Abuse It",
+  "slug": "dns-abuse",
+  "excerpt": "Explore the Domain Name System and see how attackers leverage DNS tunneling and poisoning.",
+  "date": "2024-12-24",
+  "author": "Rusiru",
+  "tags": ["DNS", "Networking", "Theory", "Security"],
+  "image": "assets/images/dns-img.png"
+  }
+]
+
