@@ -19,7 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const html = `
           <div class="post-card">
-            <img src="${post.image}" alt="${post.title}" class="post-thumbnail" />
+            <a href="posts/${post.slug}.html">
+              <img src="${post.image}" alt="${post.title}" class="post-thumbnail" />
+            </a>
             <div class="post-content">
               <h2><a href="posts/${post.slug}.html">${post.title}</a></h2>
               <p class="post-meta">${post.author} • ${new Date(post.date).toLocaleDateString()}</p>
