@@ -31,7 +31,13 @@
       <a href="../posts.html">Posts</a>
       <a href="../tags.html">Tags</a>
       <a href="../about.html">About</a>
-      <button id="theme-toggle"><i class="fa-regular fa-sun"></i></button>
+      <div class="search-container">
+        <button id="search-toggle" aria-label="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+       </button>
+      <input type="text" id="search-input" placeholder="Search posts..." />
+      </div>
+      <button id="theme-toggle"><i class="fa-solid fa-sun"></i></button>
     </nav>
   </header>
 
@@ -67,6 +73,7 @@
   <script src="../js/theme.js"></script>
   <script src="../js/navbar.js"></script>
   <script src="../js/navbar-toggle.js"></script>
+  <script src="../js/search-toggle.js"></script>
 </body>
 
 </html>
