@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const rawTag = window.location.pathname.split("/")[2];
+  const rawTag = window.location.pathname.split("/")[3];
   const currentTag = decodeURIComponent(rawTag).toLowerCase();
 
   fetch("../../data/posts.json")
