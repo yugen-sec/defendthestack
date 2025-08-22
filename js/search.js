@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   suggestionBox.classList.add("search-suggestions");
   searchContainer.appendChild(suggestionBox);
 
-  fetch("/data/posts.json")
+  fetch("/defendthestack/data/posts.json")
     .then((res) => res.json())
     .then((data) => {
       allPosts = data; 
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Enter") {
       const query = searchInput.value.trim();
       if (query) {
-        window.location.href = `/search/results.html?q=${encodeURIComponent(query)}`;
+        window.location.href = `/defendthestack/search/results.html?q=${encodeURIComponent(query)}`;
       }
     }
   });
