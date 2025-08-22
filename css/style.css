@@ -145,6 +145,31 @@ a {
   margin-left: 0.5rem;
 }
 
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 100;
+  right: 0;
+  width: 200px;
+  background: var(--accent);
+  border: 1px solid var(--fg);
+  border-radius: 5px;
+  margin-top: 0.3rem;
+  display: none;
+  z-index: 1500;
+}
+
+.suggestion-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.suggestion-item:hover {
+  background: var(--link);
+  color: #fff;
+}
+
 .hamburger {
   display: none;
   cursor: pointer;

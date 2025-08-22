@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       if (!navbarLinks.classList.contains("show")) {
         menuOverlay.classList.remove("show");
+        document.querySelector(".search-suggestions").style.display = "none";
       }
     }
   });
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       searchInput.classList.remove("active");
+      document.querySelector(".search-suggestions").style.display = "none";
       if (!navbarLinks.classList.contains("show")) {
         menuOverlay.classList.remove("show");
       }
