@@ -442,3 +442,54 @@ a.tag-link:hover {
   opacity: 0.6;
   font-size: 0.9rem;
 }
+
+.about-section {
+  margin-bottom: 4rem;
+}
+
+.about-section h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--fg);
+}
+
+.about-section p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--fg);
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.author img.avatar {
+  width: 180px; 
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.author .author-text {
+  flex: 1;
+}
+
+.author.reverse {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .author,
+  .author.reverse {
+    flex-direction: column;
+    text-align: center;
+  }
+  .author img.avatar {
+    margin-bottom: 1rem;
+  }
+}
