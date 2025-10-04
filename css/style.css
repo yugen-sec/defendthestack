@@ -370,6 +370,16 @@ button#theme-toggle {
   margin-top: auto;
 }
 
+.themed-image {
+  width: 100%;
+  height: auto;
+  transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] .themed-image {
+  filter: invert(93%) hue-rotate(180deg);
+}
+
 .tag {
   display: inline-block;
   background: #555;
@@ -551,6 +561,36 @@ a.tag-link:hover {
   font-size: 1.2rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   transition: background 0.3s ease, transform 0.2s ease;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+}
+
+thead {
+  background: var(--accent);
+}
+
+th, td {
+  border: 1px solid var(--fg);
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 [data-theme="dark"] #scrollTopBtn:hover {
