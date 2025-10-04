@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicons/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicons/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/new-apple-touch.png">
+  <title>Hello World! | DefendTheStack!</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"  crossorigin="anonymous"  referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+  <div id="menu-overlay"></div>
+  <header class="topbar">
+      <a href="../index.html" class="site-title">
+  <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+    <g>
+      <path d="M74.8,29.6V13.3H63.8v7.5c-4.2-2-8.9-3.2-13.8-3.2c-17.4,0-31.6,14.2-31.6,31.6v36.4h15h32.4h15.9V49.3C81.6,41.8,79.1,35,74.8,29.6z M67.8,17.3h2.9v8.1c-0.9-0.8-1.9-1.6-2.9-2.3V17.3z M40.4,81.7h-3.1v-5.3h3.1V81.7z M47.5,81.7h-3.2v-5.3h3.2V81.7z M54.7,81.7h-3.2v-5.3h3.2V81.7z M61.7,81.7h-3.1v-5.3h3.1V81.7z M77.6,81.7H65.7v-9.3H33.3v9.3h-11V49.3C22.4,34,34.8,21.6,50,21.6S77.6,34,77.6,49.3V81.7z" />
+      <path d="M35.3,35.6c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1c5,0,9.1-4.1,9.1-9.1C44.4,39.6,40.3,35.6,35.3,35.6z M35.3,49.7c-2.8,0-5.1-2.3-5.1-5.1c0-2.8,2.3-5.1,5.1-5.1c2.8,0,5.1,2.3,5.1,5.1C40.4,47.4,38.1,49.7,35.3,49.7z" />
+      <path d="M54.7,44.6c0,5,4.1,9.1,9.1,9.1s9.1-4.1,9.1-9.1c0-5-4.1-9.1-9.1-9.1S54.7,39.6,54.7,44.6z M68.8,44.6c0,2.8-2.3,5.1-5.1,5.1s-5.1-2.3-5.1-5.1c0-2.8,2.3-5.1,5.1-5.1S68.8,41.8,68.8,44.6z" />
+      <path d="M44.5,64.2h10v-10h-10V64.2z M48.5,58.2h2v2h-2V58.2z" />
+    </g>
+  </svg>
+  DefendTheStack
+</a>
+    <button class="hamburger" id="hamburger-btn">
+  <i class="fa-solid fa-bars"></i>
+</button>
+
+    <nav class="navbar navbar-links" id="navbar-links">
+      <a href="../posts.html">Posts</a>
+      <a href="../tags.html">Tags</a>
+      <a href="../about.html">About</a>
+      <div class="search-container">
+        <button id="search-toggle" aria-label="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+       </button>
+      <input type="text" id="search-input" placeholder="Search posts..." />
+      </div>
+      <button id="theme-toggle"><i class="fa-solid fa-sun"></i></button>
+    </nav>
+  </header>
+
+  <main style="max-width: 1000px; margin: 2rem auto; padding: 0 1rem;">
+    <h1>Hello World from DefendTheStack!</h1>
+    <p class="post-meta">By <strong>Rusiru</strong> • October 4, 2025</p>
+
+    <h2>Brief Background</h2>
+    <br>
+    <p>This is the first post in my new blog, DefendTheStack. The main reason why I created this website was to document my journey in learning offensive and defensive aspects of cyber 
+        security, focusing a bit more on Active Directory and Entra ID environments (formerly Azure AD). This doesn’t mean that almost EVERY post here will be about these two topics but it 
+        will be the meat of it (at least that’s how I see it for now). The reasons why I’ve decided to deep dive into these two technologies is because:
+    </p><br>
+
+    <ul>
+      <li><strong>Ubiquitous Adoption</strong>: Active Directory and Entra ID (Microsoft 365 ecosystems) are extremely common implementations. Almost every Active Directory course also mentions the classic 
+        “95% of Fortune 500 companies run Active Directory” statement. This is true not only for the Fortune 500 but also for most companies in the world that run IT systems. It has become the de-facto directory 
+        service with no “real” contender. Microsoft 365 cloud is also pretty widespread and a lot of organisations (both enterprises and SMBs) use it for productivity, security, IT operations, automation, or 
+        whatever purpose they require. Similar to Active Directory, Microsoft has mentioned that 70% of all Fortune 500 companies are using Microsoft 365. Aside from these numbers, I personally from my years of 
+        experience working in the industry have almost never come across a client that doesn’t use Active Directory or Microsoft 365. Because of how common these two systems are, I decided to train myself in it, so 
+        I can help a wide range of clients to secure their workloads on Active Directory and Microsoft 365. As consultants, it is very important that we have a deep understanding of how these systems work, how they 
+        can be attacked, and how they can be defended from these same attacks. I believe that without understanding the attacker mindset or offensive techniques you cannot be a well-rounded cyber security consultant.</li>
+        <br>
+      <li><strong>Because I love it</strong>: Even though I’ve listed this as the last reason, it’s actually the most important. I love doing this. I like working with computers, I like hacking into systems (it’s 
+        what got me into cyber security in the first place), and I like securing them. Cyber security is such an interesting field to study and work in and I’m so glad that I fell into this wonderful rabbit hole. 
+        Granted that there are times where I feel like ripping my hair out for various reasons but it’s all part of the game. Like everything else, you can’t have rainbows without a little rain. </li>
+    </ul><br>
+
+    <h2>Learning Resources</h2>
+    <br>
+    <p>So since my main focus is on learning Active Directory and Microsoft 365 security, let’s start with the former. I found an awesome Medium article from Erica Zelic (<a href="https://twitter.com/IAMERICAbooted">@IAMERICAbooted</a> on Twitter) that listed a whole 
+       bunch of resources to learn Windows and Active Directory in detail.
+    </p><br>
+
+    <ul>
+      <li><a href="https://ericazelic.medium.com/beginners-guide-to-self-learning-windows-and-active-directory-part-1-b665399d252f" target="_blank">Beginner's Guide to Self-Learning Windows and Active Directory: Part 1</a></li>
+      <li><a href="https://ericazelic.medium.com/guide-to-self-learning-windows-and-active-directory-part-ii-75c89dfbaf63" target="_blank">Guide to Self-Learning Windows and Active Directory: Part II</a></li>
+    </ul><br>
+
+    <p>Most of these are reading material which I will be grinding through in my own time. On top of that, I have spun up a small AD lab environment which I’ll be using as the playground to learn and understand 
+        attack and defense techniques. I followed the TCM Security Active Directory hacking video guide. It has over 5 hours of content on setting up a simple AD lab and walking through various AD attacks. To start
+         out I will be using the same lab setup as The Cyber Mentor’s AD video. We will expand our lab environment, for example syncing with Entra ID, as we learn more complex attack scenarios in the future. 
+    </p><br>
+
+    <h2>The Lab Environment</h2>
+    <br>
+
+    <img src="/assets/images/network-diagram.svg" alt="network-diagram.svg" class="themed-image" />
+    <br>
+    <p>Like I mentioned in the previous section, the lab is similar to TCM Security’s AD lab setup video. It’s a pretty simple virtual lab environment that I’m running on VMWare 
+        Workstation Pro. It’ll be more than enough for us to learn about a lot of concepts of Active Directory and Windows systems and also to demonstrate offensive and defensive 
+        techniques around them. As we deep-dive into more complex scenarios we’ll expand this virtual lab as needed. In the below table, I’ve detailed out the VM configurations and the 
+        IP addresses that I’ve configured.
+    </p>
+
+    <table><thead>
+    <tr>
+        <th>Hostname</th>
+        <th>IP Address</th>
+        <th>Configuration</th>
+        <th>Description</th>
+    </tr></thead>
+    <tbody>
+        <tr>
+            <td>DTS-FW01-PFS-EDGE</td>
+            <td>172.16.10.1</td>
+            <td>OS: Based on FreeBSD<br>CPU: 1 processor (1 core/processor)<br>RAM: 512MB<br>Storage: 20GB</td>
+            <td>Edge firewall running pfSense Community Edition. DHCP has been enabled for the LAN subnet (172.16.10.0/24)</td>
+        </tr>
+        <tr>
+            <td>DTS-DC01-SRV22</td>
+            <td>172.16.10.10</td>
+            <td>OS: Windows Server 2022<br>CPU: 2 processors (1 core/processor)<br>RAM: 4GB<br>Storage: 50GB</td>
+            <td>Primary domain controller for virtual lab. The Windows image was downloaded from the Microsoft Evaluation centre.</td>
+        </tr>
+        <tr>
+            <td>DTS-CL01-WIN11</td>
+            <td>DHCP</td>
+            <td>OS: Windows 11 Enterprise<br>CPU: 2 processors (1 core/processor)<br>RAM: 4GB<br>Storage: 64GB</td>
+            <td>Client computer joined to the domain. </td>
+        </tr>
+        <tr>
+            <td>DTS-CL02-WIN10</td>
+            <td>DHCP</td>
+            <td>OS: Windows 10 Enterprise<br>CPU: 2 processors (1 core/processor)<br>RAM: 2GB<br>Storage: 60GB</td>
+            <td>Client computer joined to the domain.</td>
+        </tr>
+        <tr>
+            <td>DTS-PWN-UBU</td>
+            <td>172.16.10.50</td>
+            <td>OS: Ubuntu 24.04.3<br>CPU: 2 processors (1 core/processor)<br>RAM: 4GB<br>Storage: 25GB</td>
+            <td>Attacker machine connected to the LAN network</td>
+        </tr>
+    </tbody></table>
+
+    <p>The network (172.16.10.0/24) that I’m using to connect the VMs together was done using LAN segments in VMWare Workstation Pro. LAN segments allow you to create an isolated 
+        network environment. VMs in a LAN segment can talk to each other but cannot route to other networks by default (which is why I’ve implemented the pfSense firewall to allow 
+        Internet access). This allows you to safely carry out security testings or attack scenarios without having to worry about your home network. Also remember that LAN segments 
+        require you to manually setup IP addressing either by static IP configurations or by setting up a DHCP server by yourself (in my case the DHCP server is the pfSense firewall).
+    </p>
+    <br>
+
+    <p>To start out, the AD domain is also pretty simple. We’ve a single forest domain with the domain name defendthestack.com setup and we also have created a few user accounts as follows:      
+    </p>
+    <br>
+
+    <table><thead>
+        <tr>
+            <th>User Display Name</th>
+            <th>User Principle Name</th>
+            <th>Description</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+            <td>Eric Cartman</td>
+            <td>e.cartman@defendthestack.com</td>
+            <td>Domain User</td>
+        </tr>
+        <tr>
+            <td>Kyle Broflovski</td>
+            <td>k.broflovski@defendthestack.com</td>
+            <td>Domain User</td>
+        </tr>
+        <tr>
+            <td>Kenny McCormick</td>
+            <td>k.mccormick@defendthestack.com</td>
+            <td>Domain Administrator</td>
+        </tr>
+        <tr>
+            <td>SQL Service</td>
+            <td>SQLService@defendthestack.com</td>
+            <td>Service account with domain admin privileges (bad practice #1) and password in account description (bad practice #2)</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>..and yes, I love South Park!!</p><br>
+
+    <p>All the accounts that I created for this lab have not-so-great passwords set up intentionally so it is easier for us to crack/bruteforce when needed, but in a way one could say 
+        that these passwords are closer to reality because humans still suck at picking strong passwords (long random passphrases FTW!).</p>
+    <br>
+    <p>I’ve also created an SMB file share in the domain controller (\\DTS-DC01-SRV22\ManBearPig) and populated it with some text documents as dummy data as also shown in TCM’s video.</p><br>
+    <p>Well that’s the homelab setup! I will be using this environment to safely learn, test, and defend the various attacks and security concepts which I will be writing more in subsequent blog posts!</p>
+  </main>
+
+  <button id="scrollTopBtn" title="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/navbar-toggle.js"></script>
+  <script src="../js/search-toggle.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/scrolltotop.js"></script>
+</body>
+
+</html>
