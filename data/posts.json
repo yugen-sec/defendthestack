@@ -1,5 +1,14 @@
 [
   {
+    "title": "Hello World from DefendTheStack!",
+    "slug": "hello-world",
+    "excerpt": "Launch post for DefendTheStack. Tracking my learning journey with labs, notes, and real-world consulting lessons.",
+    "author": "Rusiru",
+    "date": "2025-10-04",
+    "tags": ["Active Directory", "Homelab", "Personal"],
+    "image": "assets/images/hello-world-blogcard.jpg"
+  },
+  {
     "title": "Burnout in Cybersecurity: The Hidden Threat",
     "slug": "burnout-cybersecurity",
     "excerpt": "Cyber burnout is real. Learn to identify, prevent, and recover from stress in the security industry.",
