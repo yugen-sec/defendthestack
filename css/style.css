@@ -25,6 +25,13 @@ body {
   line-height: 1.6;
 }
 
+.page-main{
+  flex: 1;
+  display: flex; 
+  flex-direction: column; 
+  min-height: 100vh;
+}
+
 .page-main h1 {
   text-align: right;
 }
@@ -601,4 +608,26 @@ tbody tr:nth-child(even) {
 [data-theme="light"] #scrollTopBtn:hover {
   color: #1a1a1a;
   transform: translateY(-3px);
+}
+
+.site-footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.7rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  min-height: 50px;
+}
+
+[data-theme="dark"] .site-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.site-footer a {
+  color: var(--link);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
 }
