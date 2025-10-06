@@ -1,3 +1,4 @@
 exclude: 
   - README.md
   - LICENSE
+  - data/posts.json
