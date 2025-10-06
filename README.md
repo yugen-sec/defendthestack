@@ -1,6 +1,6 @@
 # Welcome to DefendTheStack
 
-![Logo of DefendTheStack.](/assets/images/logo.svg)
+![Logo of DefendTheStack.](/assets/images/README-logo.svg)
 
 **URL**: https://yugen-sec.github.io/defendthestack
 
