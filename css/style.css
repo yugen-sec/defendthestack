@@ -592,6 +592,16 @@ th {
   font-weight: bold;
 }
 
+table th:first-child,
+table td:first-child {
+  width: 20%;
+}
+
+table th:last-child,
+table td:last-child {
+  width: 35%;
+}
+
 tbody tr:nth-child(even) {
   background: rgba(0, 0, 0, 0.05);
 }
